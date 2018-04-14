@@ -1,0 +1,44 @@
+REST - REpresentational State Transfer
+
+Resource - has an URI (Uniform Resource Identifier)
+ - /users/example/todos/1
+ - /users/example/todos
+ - /users/example
+
+ Create a User - POST /users
+ Delete a User - DELETE /users/1
+ Get all Users - GET /users
+ Get one Users - GET /users/1
+
+ Resource can have different representations
+
+ - XML, HTML, JSON
+
+
+
+ RESTfull Web Service
+
+ Social Media Application
+
+ User -> Posts - Relationship is One to Many
+
+ - Retrieve all Users -GET /users
+ - Create a User      -POST /users
+ - Retrieve one User  -GET /users/{id}        {id} is a Path Variable
+ - Delete a User -    -DELETE /users{id}
+
+
+
+ - Retrieve all posts for a User -GET /users/{id}/posts
+ - Create a posts for a User     -POST /users/{id}/posts
+ - Retrieve details of a post    -GET /users/{id}/posts/{post_id}
+
+
+ Jackson2ObjectMapper - conversion from JSON to Java Object and Java Object to JSON
+
+ dispatcherServlet is handling all requests (URI, Request Method) and selects the correct Controller to execute that
+
+
+
+
+
