@@ -13,6 +13,8 @@ public class UserNotFoundException extends RuntimeException {
 }
 
 
+
+
 //Exception created when user is not found
 //Normally a 200 Ok response status is returned even for users that don't exist
 //to change that need to create custom exception to return appropriate error code for user not found

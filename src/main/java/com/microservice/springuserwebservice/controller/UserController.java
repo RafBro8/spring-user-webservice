@@ -4,10 +4,13 @@ import com.microservice.springuserwebservice.exception.UserNotFoundException;
 import com.microservice.springuserwebservice.model.User;
 import com.microservice.springuserwebservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -25,18 +28,43 @@ public class UserController {
     }
 
     @GetMapping("/users/{id}")
-    public User retrieveUser(@PathVariable int id) {
+    public Resource<User> retrieveUser(@PathVariable int id) {
         User user = userService.findOne(id);        //add local variable User user
         if (user == null)
             throw new UserNotFoundException("id-" + id);
-        return user;
+
+
+//use HATEOAS here - provide link to all users - "all-users", Server_PATH + "/users" - Hardcoded way (might brake if users change)
+        //Resource is Hateoas
+        //ControllerLinkBuilder helps specify for which method to implement Hateoas, in this example retrieveAllUsers()
+        Resource<User> resource = new Resource<User>(user);
+        ControllerLinkBuilder controllerLinkBuilder = ControllerLinkBuilder.linkTo(ControllerLinkBuilder.methodOn(this.getClass()).retrieveAllUsers());
+        resource.add(controllerLinkBuilder.withRel("all-users"));   //provide link to all users in retrieveUser() method
+
+
+        return resource;         //return resource instead of previous return user, also change method signature from public User to public Resource<User>
 
 
         //to test - http://localhost:8080/users/1
+
+
+
+
+
+
+    }
+
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<Object> deleteUser(@PathVariable int id) {                     //can do public void to return empty 200 response when user deleted or use ResponseEntity.noContent
+        User user = userService.deleteById(id);
+        if (user == null)
+            throw new UserNotFoundException("id-" + id);
+
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/users")
-    public ResponseEntity<Object> createUser(@RequestBody User user ) {  //User user - map Post request to user
+    public ResponseEntity<Object> createUser(@Valid @RequestBody User user ) {  //User user - map Post request to user     @Valid is Java Validation API used to validate content
         //input - details of user
         //output - CREATED HTTP Response & Return the created URI
         //@RequestBody - whatever is created in the Post method gets mapped to User parameter
@@ -65,3 +93,6 @@ public class UserController {
 
     }
 }
+
+
+//HATEOAS - Hypermedia As The Engine Of Application State - provides additional things such as links, information, etc
