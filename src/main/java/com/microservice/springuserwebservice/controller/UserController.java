@@ -1,5 +1,6 @@
 package com.microservice.springuserwebservice.controller;
 
+import com.microservice.springuserwebservice.exception.UserNotFoundException;
 import com.microservice.springuserwebservice.model.User;
 import com.microservice.springuserwebservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,11 @@ public class UserController {
 
     @GetMapping("/users/{id}")
     public User retrieveUser(@PathVariable int id) {
-        return userService.findOne(id);
+        User user = userService.findOne(id);        //add local variable User user
+        if (user == null)
+            throw new UserNotFoundException("id-" + id);
+        return user;
+
 
         //to test - http://localhost:8080/users/1
     }
