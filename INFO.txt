@@ -40,5 +40,16 @@ Resource - has an URI (Uniform Resource Identifier)
 
 
 
+ Versioning
+
+ Media Type versioning ("content negotiation", "accept header")
+ Custom headers versioning
+ URI Versioning
+ Parameter versioning
+
+
+
+
+
 
 
