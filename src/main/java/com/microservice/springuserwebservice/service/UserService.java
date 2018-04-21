@@ -1,7 +1,7 @@
 package com.microservice.springuserwebservice.service;
 
 
-import com.microservice.springuserwebservice.model.User;
+import com.microservice.springuserwebservice.entity.User;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
