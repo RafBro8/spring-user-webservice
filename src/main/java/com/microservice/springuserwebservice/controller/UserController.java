@@ -27,7 +27,7 @@ public class UserController {
 
     }
 
-    @GetMapping("/users/{id}")
+    @GetMapping(path = "/users/{id}")
     public Resource<User> retrieveUser(@PathVariable int id) {
         User user = userService.findOne(id);        //add local variable UserEntity user
         if (user == null)

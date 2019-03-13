@@ -12,7 +12,6 @@ import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
 
-
 @ApiModel(description = "UserEntity RAF")                      //SWAGGER
 @Entity
 public class User {
